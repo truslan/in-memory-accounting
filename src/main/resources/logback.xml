@@ -1,0 +1,17 @@
+<configuration scan="true" scanPeriod="1 second">
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss} [%thread] %.-1level %logger{36} - %msg%n%xEx{6}</pattern>
+		</encoder>
+	</appender>
+
+
+	<!--disable request log-->
+	<logger name="org.eclipse.jetty.server.RequestLog" level="warn"/>
+	<logger name="org.eclipse.jetty" level="warn"/>
+
+	<root level="info">
+		<appender-ref ref="stdout"/>
+	</root>
+</configuration>

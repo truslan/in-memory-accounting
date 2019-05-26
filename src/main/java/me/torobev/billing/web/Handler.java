@@ -1,5 +1,6 @@
 package me.torobev.billing.web;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.torobev.billing.Account;
@@ -55,6 +56,7 @@ public class Handler extends AbstractHandler {
 		@JsonProperty(value = "result")
 		public T result;
 
+		@JsonCreator
 		Result(@JsonProperty(value = "statusCode") int statusCode,
 					 @JsonProperty(value = "message") String message,
 					 @JsonProperty(value = "result") T result) {

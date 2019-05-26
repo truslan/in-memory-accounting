@@ -1,12 +1,15 @@
 package me.torobev.billing.web;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import me.torobev.billing.accounting.InMemoryAccounting;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.Slf4jRequestLog;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
+
+import com.fasterxml.jackson.core.StreamWriteFeature;
+import com.fasterxml.jackson.core.json.JsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import me.torobev.billing.accounting.InMemoryAccounting;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Runtime.getRuntime;
@@ -29,8 +32,8 @@ public class WebServer {
 		server.addConnector(connector);
 
 		server.setRequestLog(new Slf4jRequestLog());
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
+		JsonFactory factory = JsonFactory.builder().disable(StreamWriteFeature.AUTO_CLOSE_TARGET).build();
+		ObjectMapper mapper = new ObjectMapper(factory);
 		Handler handler = new Handler(mapper, new InMemoryAccounting());
 		server.setHandler(handler);
 
